@@ -1,0 +1,21 @@
+---
+- name: GitOps
+  hosts: localhost
+  tasks:
+  - name: Just ensuring the repo checkout exists
+    ansible.builtin.git:
+      repo: 'https://github.com/redhat-et/scribe-poc.git'
+      dest: /tmp/checkout
+
+  - name: Find all the yaml files in the directory
+    find:
+      paths: /tmp/checkout/rsync-php/app/
+      patterns: '*.yaml,*.yml'
+      recurse: yes
+    register: file_list
+
+  - name: deploy the yaml files
+    kubernetes.core.k8s:
+      state: present
+      src: "{{ item }}"
+    loop: "{{ file_list.files | map(attribute='path') | list}}"
