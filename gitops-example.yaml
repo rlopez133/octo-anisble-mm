@@ -19,3 +19,4 @@
       state: present
       src: "{{ item }}"
     loop: "{{ file_list.files | map(attribute='path') | list}}"
+    retries: 3
