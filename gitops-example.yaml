@@ -7,6 +7,11 @@
       repo: 'https://github.com/redhat-et/scribe-poc.git'
       dest: /tmp/checkout
 
+  - name: deploy the yaml files
+    kubernetes.core.k8s:
+      state: present
+      src: /tmp/checkout/rsync-php/app/01-namespace.yaml
+
   - name: Find all the yaml files in the directory
     find:
       paths: /tmp/checkout/rsync-php/app/
