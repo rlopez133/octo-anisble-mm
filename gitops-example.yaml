@@ -1,5 +1,5 @@
 ---
-- name: GitOps
+- name: Sample App Install
   hosts: localhost
   tasks:
   - name: Just ensuring the repo checkout exists
